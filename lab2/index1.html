@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h2>Калькулятор чаевых</h2>
+    
+    <p>Счёт: <input type="number" id="bill" onchange="calculate()" placeholder="1000"></p>
+    
+    <p>Процент чаевых: 
+        <select id="tip" onchange="calculate()">
+            <option value="0">0%</option>
+            <option value="5">5%</option>
+            <option value="10" selected>10%</option>
+            <option value="15">15%</option>
+            <option value="20">20%</option>
+        </select>
+    </p>
+    
+    <p>Количество человек: 
+        <select id="people" onchange="calculate()">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </p>
+    
+    <div id="result" style="margin-top: 20px; padding: 15px; background: #f0f0f0;">
+        Результат появится здесь...
+    </div>
+
+    <script>
+        function calculate() {
+            const bill = parseFloat(document.getElementById('bill').value) || 0;
+            const tipPercent = parseInt(document.getElementById('tip').value);
+            const people = parseInt(document.getElementById('people').value);
+            
+            const tipAmount = bill * (tipPercent / 100);
+            const total = bill + tipAmount;
+            const perPerson = total / people;
+            
+            document.getElementById('result').innerHTML = `
+                <strong>Чаевые:</strong> ${tipAmount.toFixed(2)} ₽<br>
+                <strong>Итого:</strong> ${total.toFixed(2)} ₽<br>
+                <strong>На человека:</strong> ${perPerson.toFixed(2)} ₽
+            `;
+        }
+    </script>
+</body>
+</html>

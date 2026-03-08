@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div>
+        <input type="radio" name="mode" id="manual" value="manual" onchange="setMode('manual')" checked>
+        <label for="manual">Ручной режим</label>
+        
+        <input type="radio" name="mode" id="auto" value="auto" onchange="setMode('auto')">
+        <label for="auto">Автоматический режим</label>
+    </div>
+    
+    <br>
+    
+    <img id="pic" src="images/image1.png" style="cursor: pointer;">
+    <br>
+    <input type="text" id="name" readonly>
+
+    <script>
+        const images = [
+            { src: 'images/image1.png', name: 'image1.png' },
+            { src: 'images/image2.png', name: 'image2.png' },
+            { src: 'images/image3.png', name: 'image3.png' },
+            { src: 'images/image4.png', name: 'image4.png' },
+            { src: 'images/image5.png', name: 'image5.png' }
+        ];
+
+        let current = 0;
+        let autoInterval = null;
+        const img = document.getElementById('pic');
+        const txt = document.getElementById('name');
+
+        function show() {
+            img.src = images[current].src;
+            txt.value = images[current].name;
+        }
+
+        function nextImage() {
+            current++;
+            if (current >= images.length) current = 0;
+            show();
+        }
+
+        function setMode(mode) {
+            if (mode === 'auto') {
+                autoInterval = setInterval(nextImage, 1000);
+            } else {
+                clearInterval(autoInterval);
+                autoInterval = null;
+            }
+        }
+
+        img.onclick = function() {
+            const manualMode = document.getElementById('manual').checked;
+            if (manualMode) {
+                nextImage();
+            }
+        };
+
+        show();
+    </script>
+</body>
+</html>

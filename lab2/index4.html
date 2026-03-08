@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h2>Соберите свою пиццу</h2>
+    
+    <h3>Выберите размер:</h3>
+    <input type="radio" name="size" id="size-none" value="" onchange="updatePizza()" checked>
+    <label for="size-none">Не выбрано</label><br>
+    
+    <input type="radio" name="size" id="small" value="small" onchange="updatePizza()">
+    <label for="small">Маленькая (25 см) - 500₽</label><br>
+    
+    <input type="radio" name="size" id="medium" value="medium" onchange="updatePizza()">
+    <label for="medium">Средняя (30 см) - 700₽</label><br>
+    
+    <input type="radio" name="size" id="large" value="large" onchange="updatePizza()">
+    <label for="large">Большая (35 см) - 1000₽</label><br>
+    
+    <h3>Выберите начинку:</h3>
+    <input type="radio" name="topping" id="topping-none" value="" onchange="updatePizza()" checked>
+    <label for="topping-none">Не выбрано</label><br>
+    
+    <input type="radio" name="topping" id="margherita" value="Маргарита" onchange="updatePizza()">
+    <label for="margherita">Маргарита</label><br>
+    
+    <input type="radio" name="topping" id="pepperoni" value="Пепперони" onchange="updatePizza()">
+    <label for="pepperoni">Пепперони</label><br>
+    
+    <input type="radio" name="topping" id="fourcheese" value="4 Сыра" onchange="updatePizza()">
+    <label for="fourcheese">4 сыра</label><br>
+    
+    <input type="radio" name="topping" id="meatfeast" value="Мясная" onchange="updatePizza()">
+    <label for="meatfeast">Мясная</label><br>
+    
+    <h3>Выберите тесто:</h3>
+    <input type="radio" name="dough" id="dough-none" value="" onchange="updatePizza()" checked>
+    <label for="dough-none">Не выбрано</label><br>
+    
+    <input type="radio" name="dough" id="thin" value="тонкое" onchange="updatePizza()">
+    <label for="thin">Тонкое</label><br>
+    
+    <input type="radio" name="dough" id="thick" value="пышное" onchange="updatePizza()">
+    <label for="thick">Пышное</label><br>
+    
+    <div id="order" style="margin-top: 20px; padding: 15px; background: #f0f0f0;">
+        <h3>Ваш заказ:</h3>
+        <p id="pizzaInfo">Не выбрано</p>
+        <p><strong>Итого: <span id="price">0</span>₽</strong></p>
+    </div>
+
+    <script>
+        function updatePizza() {
+            const size = document.querySelector('input[name="size"]:checked');
+            const topping = document.querySelector('input[name="topping"]:checked');
+            const dough = document.querySelector('input[name="dough"]:checked');
+            
+            if (!size.value || !topping.value || !dough.value) {
+                document.getElementById('pizzaInfo').innerHTML = "Не выбрано";
+                document.getElementById('price').textContent = 0;
+                return;
+            }
+            
+            let price = 0;
+            let sizeText = '';
+            
+            if (size.value === 'small') {
+                price = 500;
+                sizeText = 'Маленькая (25 см)';
+            } else if (size.value === 'medium') {
+                price = 700;
+                sizeText = 'Средняя (30 см)';
+            } else {
+                price = 1000;
+                sizeText = 'Большая (35 см)';
+            }
+            
+            document.getElementById('pizzaInfo').innerHTML = 
+                sizeText + ', ' + dough.value + ' тесто, начинка: ' + topping.value;
+            document.getElementById('price').textContent = price;
+        }
+    </script>
+</body>
+</html>

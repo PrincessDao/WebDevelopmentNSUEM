@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <label>X: <input type="number" id="x" value="50"></label><br><br>
+    <label>Y: <input type="number" id="y" value="50"></label><br><br>
+    <label>Ширина: <input type="number" id="width" value="200"></label><br><br>
+    <label>Высота: <input type="number" id="height" value="150"></label><br><br>
+    <label>Цвет: <input type="color" id="color" value="#FF6B6B"></label><br><br>
+    <button onclick="drawRect()">Нарисовать</button><br><br>
+    
+    <canvas id="canvas" width="600" height="400" style="border: 1px solid black;"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        function drawRect() {
+            const x = parseInt(document.getElementById('x').value);
+            const y = parseInt(document.getElementById('y').value);
+            const width = parseInt(document.getElementById('width').value);
+            const height = parseInt(document.getElementById('height').value);
+            const color = document.getElementById('color').value;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, width, height);
+        }
+
+        drawRect();
+    </script>
+</body>
+</html>
