@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .control-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        canvas {
+            background: white;
+            border: 2px solid #333;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <div class="control-group">
+            <label for="rx">Радиус по X:</label>
+            <input type="number" id="rx" value="100" min="1" max="300">
+        </div>
+        
+        <div class="control-group">
+            <label for="ry">Радиус по Y:</label>
+            <input type="number" id="ry" value="50" min="1" max="300">
+        </div>
+
+        <div class="control-group">
+            <label for="lineWidth">Толщина линии:</label>
+            <input type="number" id="lineWidth" value="5" min="1" max="20">
+        </div>
+
+        <div class="control-group">
+            <label for="strokeColor">Цвет линии:</label>
+            <input type="color" id="strokeColor" value="#ff0000">
+        </div>
+
+        <div class="control-group">
+            <label for="fillColor">Цвет заливки:</label>
+            <input type="color" id="fillColor" value="#00ff00">
+        </div>
+
+        <div class="control-group">
+            <label for="needsFill">Требуется заливка:</label>
+            <input type="checkbox" id="needsFill" checked>
+        </div>
+    </div>
+
+    <canvas id="canvas" width="600" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const controls = {
+            rx: document.getElementById('rx'),
+            ry: document.getElementById('ry'),
+            lineWidth: document.getElementById('lineWidth'),
+            strokeColor: document.getElementById('strokeColor'),
+            fillColor: document.getElementById('fillColor'),
+            needsFill: document.getElementById('needsFill')
+        };
+
+        function drawEllipse() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const rx = parseFloat(controls.rx.value);
+            const ry = parseFloat(controls.ry.value);
+            const lineWidth = parseFloat(controls.lineWidth.value);
+            const strokeColor = controls.strokeColor.value;
+            const fillColor = controls.fillColor.value;
+            const needsFill = controls.needsFill.checked;
+
+            const x = canvas.width / 2;
+            const y = canvas.height / 2;
+
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = strokeColor;
+            ctx.fillStyle = fillColor;
+
+            ctx.beginPath();
+            ctx.ellipse(x, y, rx, ry, 0, 0, 2 * Math.PI);
+            ctx.closePath();
+
+            if (needsFill) {
+                ctx.fill();
+            }
+            ctx.stroke();
+        }
+
+        Object.values(controls).forEach(control => {
+            control.addEventListener('change', drawEllipse);
+            if(control.type === 'number' || control.type === 'range') {
+                control.addEventListener('input', drawEllipse);
+            }
+        });
+
+        drawEllipse();
+    </script>
+</body>
+</html>
